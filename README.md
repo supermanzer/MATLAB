@@ -13,3 +13,5 @@ tgaps.m:  A function used to find gaps in time vector of time series data (e.g. 
 
 nanFuncs:  A series of functions used to finding NaN values and interpolating over them if they fall within user 		   specified parameters.
 
+calcDF.m:  This function is used to calculate effective degrees of freedom in one or two time series vectors.  It calculates the autocorrelation function and uses the first zero crossing or first e-folding (depending on user input) to determine decorrelation time.  In the case two vectors are passed in, it returns the lower of the two degrees of freedom for the most conservative estimate.
+
