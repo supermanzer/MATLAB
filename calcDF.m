@@ -15,9 +15,9 @@ function [ df ] = calcDF(x,type,y )
 %--------------------------------------------------------------------------
 if nargin >= 2
 % ensuring compliance with of df type naming standards
-    if strcmp(type,'zc')==0 || strcmp(type,'ef')==0
+    if strcmp(type,'zc')==0 && strcmp(type,'ef')==0
         disp('Only "zc" or "ef" are valid types for degrees of freedom')
-        exit
+        return
     end
 end
 if nargin < 2 % if only one time series was provided and no df type
