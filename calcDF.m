@@ -26,25 +26,27 @@ if nargin < 2 % if only one time series was provided and no df type
     c=c(l>=0);l=l(l>=0); % because this is a time series we are only
                          % interested in correlations moving forward
                          % (non-negative).
-    df=l(find(c<=0,1,'first'));
+    df=length(x)/(l(find(c<=0,1,'first')));
 elseif nargin < 3 % if the user passed in a df type along with a single vector
     [c,l]=xcov(x,'coeff');
     c=c(l>=0);l=l(l>=0);
     if strcmp(type,'zc')==1 % if the type passed in is zero crossing, we use that
         df=l(find(c<=0,1,'first'));
+        df=floor(length(x)/df);
     else  % otherwise we check for the first e-folding
         df = l(find(c<=(1/exp(1)),1,'first'));
+        df=floor(length(x))/df;
     end
 else % if a type and two time series vectors were provided
     [cx,lx]=xcov(x,'coeff'); cx=cx(lx>=0);lx=lx(lx>=0);
     [cy,ly]=xcov(y,'coeff'); cy=cy(ly>=0);ly=ly(ly>=0);
     % calculating degrees of freedom using first zero crossing
     if strcmp(type,'zc')==1
-        xdf=lx(find(cx<=0,1,'first'));
-        ydf=ly(find(cy<=0,1,'first'));
+        xdf=floor(length(x)/(lx(find(cx<=0,1,'first'))));
+        ydf=floor(length(y)/(ly(find(cy<=0,1,'first'))));
     else % using first e-folding
-        xdf=lx(find(cx<=(1/exp(1)),1,'first'));
-        ydf=ly(find(cy<=(1/exp(1)),1,'first'));
+        xdf=floor(length(x)/(lx(find(cx<=(1/exp(1)),1,'first'))));
+        ydf=floor(length(y)/(ly(find(cy<=(1/exp(1)),1,'first'))));
     end
 % selecting the most conservative degrees of freedom to return
     if xdf < ydf
